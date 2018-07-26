@@ -61,4 +61,4 @@ It may be desirable to set a property to keep you finalName and jarName linked s
 
 ## Screenshots
 
-![example](/exampleSS.png?raw=true "simple")
+![example](/exampleSSv2.png?raw=true "simple")
