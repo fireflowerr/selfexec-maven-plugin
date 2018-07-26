@@ -55,7 +55,7 @@ It may be desirable to set a property to keep you finalName and jarName linked s
     ...
     <finalName>${buildName}</finalName>
     ...
-    <jarName>${buildName</jarName}
+    <jarName>${buildName</jarName>
 
 </br>
 
