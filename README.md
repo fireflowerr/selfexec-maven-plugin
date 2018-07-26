@@ -1,6 +1,6 @@
 # selfexec-maven-plugin
 A maven plugin that allows jar files to be executed transparently (no java -jar ...)
-This maven plugin appends an sh script to the head of a certain jar in the ${project.build.directory} allowing it to be executed from a CLI. Currently to run generated file you must still chmod +x (see screenshot for example).
+This maven plugin appends an sh script to the head of a certain jar in the ${project.build.directory} allowing it to be executed from a CLI.
 </br>
 ## Installation Instructions
 
@@ -35,7 +35,7 @@ For a jar project with `<finalName>example</finalName>`
       <groupId>paroxayte</groupId>
       <artifactId>selfexec-maven-plugin</artifactId>
       <configuration>
-        <jarName>example.jar</jarName>
+        <jarName>example</jarName>
       </configuration>
       <executions>
         <execution>
@@ -46,6 +46,16 @@ For a jar project with `<finalName>example</finalName>`
         </execution>
       </executions>
     </plugin>
+    
+It may be desirable to set a property to keep you finalName and jarName linked since they must be the same. EG:
+
+    <properties>
+        <buildName>example</buildName>
+    </properties>
+    ...
+    <finalName>${buildName}</finalName>
+    ...
+    <jarName>${buildName</jarName}
 
 </br>
 
