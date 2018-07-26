@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -62,6 +63,8 @@ public class SelfExec extends AbstractMojo {
           writeOut.flush();
         }
 
+      } catch (EOFException e) {
+        System.out.println("execution appendening successful");
       } catch (IOException e) {
         e.printStackTrace();
       }
