@@ -14,7 +14,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-
+import java.nio.file.attribute.PosixFilePermissions;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -26,29 +26,28 @@ public class SelfExec extends AbstractMojo {
 
   private static String SCRIPT_NAME = "/stub.sh";
 
-  private DataOutputStream writeOut = null;
-
   @Parameter(property = "jarName", defaultValue = "${project.artifactId}-${project.version}")
   String jarName;
 
   @Parameter(defaultValue = "${project.build.directory}", readonly = true)
   String buildDir;
 
-  @Parameter(property = "selfexec.overWrite", defaultValue = "false")
-  boolean overWrite;
-
   public void execute() throws MojoExecutionException {
+
+    jarName += ".jar";
 
     Path jarFile = FileSystems.getDefault().getPath(buildDir + '/' + jarName);
     String noExt = jarName.substring(0, jarName.length() - 4);
     Path execFile = FileSystems.getDefault().getPath(buildDir + '/' + noExt);
 
     if (Files.exists(jarFile)) {
+      OutputStream baseOut = null;
+      DataOutputStream writeOut = null;
       try (DataInputStream readIn = new DataInputStream(
           new BufferedInputStream(Files.newInputStream(jarFile, StandardOpenOption.READ)))) {
 
         byte[] bufStore = new byte[4096];
-        OutputStream baseOut = Files.newOutputStream(execFile, StandardOpenOption.CREATE, StandardOpenOption.WRITE,
+        baseOut = Files.newOutputStream(execFile, StandardOpenOption.CREATE, StandardOpenOption.WRITE,
             StandardOpenOption.TRUNCATE_EXISTING);
 
         writeOut = new DataOutputStream(new BufferedOutputStream(baseOut, bufStore.length));
@@ -64,9 +63,18 @@ public class SelfExec extends AbstractMojo {
         }
 
       } catch (EOFException e) {
-        System.out.println("execution appendening successful");
+        System.out.println("writing complete.");
       } catch (IOException e) {
         e.printStackTrace();
+      } finally {
+        if(writeOut != null) {
+          Unchecked.runnable(writeOut::close);
+          try {
+            Files.setPosixFilePermissions(execFile, PosixFilePermissions.fromString("rwxr-xr-x"));
+          } catch(IOException e) {
+            System.out.println("Failed to set executable permissions...");
+          }
+        }
       }
 
     } else {
