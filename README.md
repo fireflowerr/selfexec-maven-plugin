@@ -16,7 +16,7 @@ This maven plugin appends an sh script to the head of a certain jar in the ${pro
     <dependency>
         <groupId>com.github.paroxayte</groupId>
         <artifactId>selfexec-maven-plugin</artifactId>
-        <version>v0.12</version>
+        <version>v0.13</version>
     </dependency>  
     
 </br>
