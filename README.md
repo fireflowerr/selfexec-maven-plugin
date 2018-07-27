@@ -56,6 +56,8 @@ It may be desirable to set a property to keep you finalName and jarName linked s
     <finalName>${buildName}</finalName>
     ...
     <jarName>${buildName}</jarName>
+    
+This plugin may also be run from the CLI in a maven project directory. `mvn selfexec:selfexec`
 
 </br>
 
