@@ -1,7 +1,9 @@
 # selfexec-maven-plugin
+
 A maven plugin that allows jar files to be executed transparently (no java -jar ...)
 This maven plugin appends an sh script to the head of a certain jar in the ${project.build.directory} allowing it to be executed from a CLI.
 </br>
+
 ## Installation Instructions
 
     <repositories>
@@ -10,22 +12,24 @@ This maven plugin appends an sh script to the head of a certain jar in the ${pro
           <url>https://jitpack.io</url>
       </repository>
     </repositories>
-    
 </br>
-    
+
     <dependency>
         <groupId>com.github.paroxayte</groupId>
         <artifactId>selfexec-maven-plugin</artifactId>
-        <version>v0.13</version>
-    </dependency>  
-    
+        <version>v1.0</version>
+    </dependency>
 </br>
 
-## Configurations 
+## Configurations
 
-This plugin has a single public property, `jarName` whose default value is `${project.artifactId}-${project.version}`.
-The jarName property represents the jarFile to be made self executable. 
-The single goal of this plugin, **selfexec** simply creates a new file which is a self executing version of the provided jar.
+This plugin has two public properties, `jarName`  and `overwrite`.
+
+* `jarName` - alias = `selfexec.jarName`: Represents the jarFile to be made self executable. Its default value is `${project.artifactId}-${project.version}`
+
+* `overwrite` - alias = `selfexec.overwrite`: If true deletes the original jar.
+  
+  The single goal of this plugin, **selfexec** simply creates a new file which is a self executing version of the provided jar.
 
 ### Example configuration
 
@@ -36,6 +40,7 @@ For a jar project with `<finalName>example</finalName>`
       <artifactId>selfexec-maven-plugin</artifactId>
       <configuration>
         <jarName>example</jarName>
+        <overwrite>true</overwrite>
       </configuration>
       <executions>
         <execution>
@@ -46,7 +51,7 @@ For a jar project with `<finalName>example</finalName>`
         </execution>
       </executions>
     </plugin>
-    
+
 It may be desirable to set a property to keep you finalName and jarName linked since they must be the same. EG:
 
     <properties>
@@ -56,7 +61,7 @@ It may be desirable to set a property to keep you finalName and jarName linked s
     <finalName>${buildName}</finalName>
     ...
     <jarName>${buildName}</jarName>
-    
+
 This plugin may also be run from the CLI in a maven project directory. `mvn selfexec:selfexec`
 
 </br>

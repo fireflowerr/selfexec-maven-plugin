@@ -26,11 +26,13 @@ public class SelfExec extends AbstractMojo {
 
   private static String SCRIPT_NAME = "/stub.sh";
 
-  /**
-   * The name of the jar to be made self executing.
-   */
-  @Parameter(property = "jarName", defaultValue = "${project.artifactId}-${project.version}")
+  // The name of the jar to be made self executing.
+  @Parameter(property = "jarName", defaultValue = "${project.artifactId}-${project.version}", alias = "selfexec.jarName")
   String jarName;
+
+  // If true, delete the original jar
+  @Parameter(property = "overwrite", defaultValue = "false", alias = "selfexec.overwrite")
+  boolean overwrite;
 
   @Parameter(defaultValue = "${project.build.directory}", readonly = true)
   String buildDir;
@@ -68,12 +70,16 @@ public class SelfExec extends AbstractMojo {
           try {
             Files.setPosixFilePermissions(execFile, PosixFilePermissions.fromString("rwxr-xr-x"));
           } catch(IOException e) {
-            System.out.println("Failed to set executable permissions...");
+            throw new RuntimeException("Failed to set executable permissions...", e);
           }
       }
 
     } else {
       throw new MojoExecutionException(jarName + " not found in build output directory");
+    }
+
+    if(overwrite) {
+      Unchecked.runnable(() -> Files.delete(jarFile)).run();
     }
 
   }
