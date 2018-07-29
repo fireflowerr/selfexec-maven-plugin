@@ -76,7 +76,7 @@ It may be desirable to set a property to keep you finalName and jarName linked s
     ...
     <jarName>${buildName}</jarName>
 
-This plugin may also be run from the CLI in a maven project directory. `mvn selfexec:selfexec`
+This plugin may also be run from the CLI in a maven project directory. `mvn com.github.paroxayte:selfexec-maven-plugin:selfexec`
 
 </br>
 
