@@ -27,7 +27,6 @@ This maven plugin appends an sh script to the head of a certain jar in the ${pro
       <version>v1.1</version>
     </plugin>
 
-
 ## Configurations
 
 This plugin has two public properties, `jarName`  and `overwrite`.
