@@ -6,20 +6,27 @@ This maven plugin appends an sh script to the head of a certain jar in the ${pro
 
 ## Installation Instructions
 
-    <repositories>
-      <repository>
+    <pluginRepositories>
+      <pluginRepository>
           <id>jitpack.io</id>
           <url>https://jitpack.io</url>
-      </repository>
-    </repositories>
+      </pluginRepository>
+    </pluginRepositories>
 </br>
 
-    <dependency>
-        <groupId>com.github.paroxayte</groupId>
-        <artifactId>selfexec-maven-plugin</artifactId>
-        <version>v1.0</version>
-    </dependency>
-</br>
+    <plugin>
+      <dependencies>
+        <dependency>
+          <groupId>com.github.paroxayte</groupId>
+          <artifactId>selfexec-maven-plugin</artifactId>
+          <version>v1.1</version>
+        </dependency>
+      </dependencies>
+      <groupId>com.github.paroxayte</groupId>
+      <artifactId>selfexec-maven-plugin</artifactId>
+      <version>v1.1</version>
+    </plugin>
+
 
 ## Configurations
 
@@ -36,10 +43,18 @@ This plugin has two public properties, `jarName`  and `overwrite`.
 For a jar project with `<finalName>example</finalName>`
 
     <plugin>
-      <groupId>paroxayte</groupId>
+      <dependencies>
+        <dependency>
+          <groupId>com.github.paroxayte</groupId>
+          <artifactId>selfexec-maven-plugin</artifactId>
+          <version>v1.1</version>
+        </dependency>
+      </dependencies>
+      <groupId>com.github.paroxayte</groupId>
       <artifactId>selfexec-maven-plugin</artifactId>
+      <version>v1.1</version>
       <configuration>
-        <jarName>example</jarName>
+        <jarName>${buildName}</jarName>
         <overwrite>true</overwrite>
       </configuration>
       <executions>
