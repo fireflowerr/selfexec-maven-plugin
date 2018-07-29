@@ -19,12 +19,12 @@ This maven plugin appends an sh script to the head of a certain jar in the ${pro
         <dependency>
           <groupId>com.github.paroxayte</groupId>
           <artifactId>selfexec-maven-plugin</artifactId>
-          <version>v1.1</version>
+          <version>v1.2</version>
         </dependency>
       </dependencies>
       <groupId>com.github.paroxayte</groupId>
       <artifactId>selfexec-maven-plugin</artifactId>
-      <version>v1.1</version>
+      <version>v1.2</version>
     </plugin>
 
 ## Configurations
@@ -46,12 +46,12 @@ For a jar project with `<finalName>example</finalName>`
         <dependency>
           <groupId>com.github.paroxayte</groupId>
           <artifactId>selfexec-maven-plugin</artifactId>
-          <version>v1.1</version>
+          <version>v1.2</version>
         </dependency>
       </dependencies>
       <groupId>com.github.paroxayte</groupId>
       <artifactId>selfexec-maven-plugin</artifactId>
-      <version>v1.1</version>
+      <version>v1.2</version>
       <configuration>
         <jarName>${buildName}</jarName>
         <overwrite>true</overwrite>
@@ -76,7 +76,7 @@ It may be desirable to set a property to keep you finalName and jarName linked s
     ...
     <jarName>${buildName}</jarName>
 
-This plugin may also be run from the CLI in a maven project directory. `mvn com.github.paroxayte:selfexec-maven-plugin:selfexec`
+This plugin may also be run from the CLI in a maven project directory. `mvn selfexec:selfexec`
 
 </br>
 
