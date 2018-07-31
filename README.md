@@ -35,7 +35,7 @@ This plugin has two public properties, `jarName`  and `overwrite`.
 
 * `overwrite` - alias = `selfexec.overwrite`: If true deletes the original jar.
 
-* `keepExt` - alias = `selfexec.keepExt`: If true, leaves the .jar extention on the jar. Use this for crossplatform compatiability. Eg unix like systems can run `./example.jar` and windows/other systems can run java `-jar example.jar`
+* `keepExt` - alias = `selfexec.keepExt`: If true, leaves the .jar extention on the jar. Use this for crossplatform compatiability. Eg unix like systems can run `./example.jar` and windows/other systems can run java `-jar example.jar` If `keepExt` is true `overwrite` will be forcibly set to true.
   
   The single goal of this plugin, **selfexec** simply creates a new file which is a self executing version of the provided jar.
 
