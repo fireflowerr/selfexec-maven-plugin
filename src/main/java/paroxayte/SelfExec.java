@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.nio.file.attribute.PosixFilePermissions;
 import org.apache.maven.plugin.AbstractMojo;
@@ -28,14 +29,17 @@ public class SelfExec extends AbstractMojo {
 
   // The name of the jar to be made self executing.
   @Parameter(property = "jarName", defaultValue = "${project.artifactId}-${project.version}", alias = "selfexec.jarName")
-  String jarName;
+  private String jarName;
 
   // If true, delete the original jar
   @Parameter(property = "overwrite", defaultValue = "false", alias = "selfexec.overwrite")
-  boolean overwrite;
+  private boolean overwrite;
 
   @Parameter(defaultValue = "${project.build.directory}", readonly = true)
-  String buildDir;
+  private String buildDir;
+
+  @Parameter(property = "keepExt", defaultValue = "false", alias = "selfexec.keepExt")
+  private boolean keepExt;
 
   public void execute() throws MojoExecutionException {
 
@@ -78,8 +82,12 @@ public class SelfExec extends AbstractMojo {
       throw new MojoExecutionException(jarName + " not found in build output directory");
     }
 
+    overwrite = keepExt ? true : overwrite;
     if(overwrite) {
       Unchecked.runnable(() -> Files.delete(jarFile)).run();
+    }
+    if(keepExt) {
+      Unchecked.runnable(() -> Files.move(execFile, jarFile, StandardCopyOption.REPLACE_EXISTING)).run();
     }
 
   }

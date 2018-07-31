@@ -19,12 +19,12 @@ This maven plugin appends an sh script to the head of a certain jar in the ${pro
         <dependency>
           <groupId>com.github.paroxayte</groupId>
           <artifactId>selfexec-maven-plugin</artifactId>
-          <version>v1.2</version>
+          <version>v1.3</version>
         </dependency>
       </dependencies>
       <groupId>com.github.paroxayte</groupId>
       <artifactId>selfexec-maven-plugin</artifactId>
-      <version>v1.2</version>
+      <version>v1.3</version>
     </plugin>
 
 ## Configurations
@@ -34,6 +34,8 @@ This plugin has two public properties, `jarName`  and `overwrite`.
 * `jarName` - alias = `selfexec.jarName`: Represents the jarFile to be made self executable. Its default value is `${project.artifactId}-${project.version}`
 
 * `overwrite` - alias = `selfexec.overwrite`: If true deletes the original jar.
+
+* `keepExt` - alias = `selfexec.keepExt`: If true, leaves the .jar extention on the jar. Use this for crossplatform compatiability. Eg unix like systems can run `./example.jar` and windows/other systems can run java `-jar example.jar`
   
   The single goal of this plugin, **selfexec** simply creates a new file which is a self executing version of the provided jar.
 
@@ -46,12 +48,12 @@ For a jar project with `<finalName>example</finalName>`
         <dependency>
           <groupId>com.github.paroxayte</groupId>
           <artifactId>selfexec-maven-plugin</artifactId>
-          <version>v1.2</version>
+          <version>v1.3</version>
         </dependency>
       </dependencies>
       <groupId>com.github.paroxayte</groupId>
       <artifactId>selfexec-maven-plugin</artifactId>
-      <version>v1.2</version>
+      <version>v1.3</version>
       <configuration>
         <jarName>${buildName}</jarName>
         <overwrite>true</overwrite>
