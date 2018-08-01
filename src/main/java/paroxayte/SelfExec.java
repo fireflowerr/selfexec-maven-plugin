@@ -31,23 +31,22 @@ public class SelfExec extends AbstractMojo {
   @Parameter(property = "jarName", defaultValue = "${project.artifactId}-${project.version}", alias = "selfexec.jarName")
   private String jarName;
 
-  // If true, delete the original jar
-  @Parameter(property = "overwrite", defaultValue = "false", alias = "selfexec.overwrite")
-  private boolean overwrite;
+  // Determines the name of the outputed selfexec jar file. Default value is jarName without .jar extension
+  @Parameter(property = "finalName", alias = "selfexec.finalName")
+  private String finalName;
 
   @Parameter(defaultValue = "${project.build.directory}", readonly = true)
   private String buildDir;
 
-  @Parameter(property = "keepExt", defaultValue = "false", alias = "selfexec.keepExt")
-  private boolean keepExt;
-
   public void execute() throws MojoExecutionException {
-
+    if(finalName == null) {
+      finalName = jarName;
+    }
+    Path finalNamePath = FileSystems.getDefault().getPath(buildDir + '/' + finalName);
     jarName += ".jar";
 
     Path jarFile = FileSystems.getDefault().getPath(buildDir + '/' + jarName);
-    String noExt = jarName.substring(0, jarName.length() - 4);
-    Path execFile = FileSystems.getDefault().getPath(buildDir + '/' + noExt);
+    Path execFile = FileSystems.getDefault().getPath(buildDir + '/' + "tmp");
 
     if (Files.exists(jarFile)) {
 
@@ -81,15 +80,8 @@ public class SelfExec extends AbstractMojo {
     } else {
       throw new MojoExecutionException(jarName + " not found in build output directory");
     }
-
-    overwrite = keepExt ? true : overwrite;
-    if(overwrite) {
-      Unchecked.runnable(() -> Files.delete(jarFile)).run();
-    }
-    if(keepExt) {
-      Unchecked.runnable(() -> Files.move(execFile, jarFile, StandardCopyOption.REPLACE_EXISTING)).run();
-    }
-
+   
+    Unchecked.runnable(() -> Files.move(execFile, finalNamePath, StandardCopyOption.REPLACE_EXISTING)).run();
   }
 
 }

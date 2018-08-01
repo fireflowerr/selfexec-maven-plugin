@@ -4,7 +4,7 @@
   <groupId>com.github.paroxayte</groupId>
   <artifactId>selfexec-maven-plugin</artifactId>
   <packaging>maven-plugin</packaging>
-  <version>v1.3</version>
+  <version>v1.4</version>
   <name>selfexec-maven-plugin Maven Mojo</name>
   <url>http://maven.apache.org</url>
    <properties>
